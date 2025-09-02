@@ -6,6 +6,8 @@ if(isset($_POST) && !empty($_POST)){
 	print_r($_POST);
 	echo "</pre>";exit();
 */
+
+// hola mundo
 	$archivo = "
 	<?php \$calculos = array( // Hogar
 		array(
@@ -23,7 +25,7 @@ if(isset($_POST) && !empty($_POST)){
 				array(".$_POST['actividades_diarias'][0][0][10][0].",".$_POST['actividades_diarias'][0][0][10][1]."),
 				array(".$_POST['actividades_diarias'][0][0][11][0].",".$_POST['actividades_diarias'][0][0][11][1]."),
 				array(".$_POST['actividades_diarias'][0][0][12][0].",".$_POST['actividades_diarias'][0][0][12][1].")
-			),  // ELECTRODOMÉSTICOS
+			),  // ELECTRODOMï¿½STICOS
 			array(
 				array(".$_POST['actividades_diarias'][0][1][0][0].",".$_POST['actividades_diarias'][0][1][0][1].",".$_POST['actividades_diarias'][0][1][0][2].",".$_POST['actividades_diarias'][0][1][0][3].",".$_POST['actividades_diarias'][0][1][0][4]."),
 				array(".$_POST['actividades_diarias'][0][1][1][0].",".$_POST['actividades_diarias'][0][1][1][1].",".$_POST['actividades_diarias'][0][1][1][2].",".$_POST['actividades_diarias'][0][1][1][3].",".$_POST['actividades_diarias'][0][1][1][4]."),
@@ -40,12 +42,12 @@ if(isset($_POST) && !empty($_POST)){
 				array(".$_POST['actividades_diarias'][0][1][12][0].",".$_POST['actividades_diarias'][0][1][12][1].",".$_POST['actividades_diarias'][0][1][12][2].",".$_POST['actividades_diarias'][0][1][12][3].",".$_POST['actividades_diarias'][0][1][12][4]."),
 				array(".$_POST['actividades_diarias'][0][1][13][0].",".$_POST['actividades_diarias'][0][1][13][1].",".$_POST['actividades_diarias'][0][1][13][2].",".$_POST['actividades_diarias'][0][1][13][3].",".$_POST['actividades_diarias'][0][1][13][4].")
 			),
-			array( // CALEFACCIÓN ------- VER EL DE ELECTRICIDAD
+			array( // CALEFACCIï¿½N ------- VER EL DE ELECTRICIDAD
 				array(".$_POST['actividades_diarias'][0][2][0][0]."),
 				array(".$_POST['actividades_diarias'][0][2][1][0]."),
 				array(".$_POST['actividades_diarias'][0][2][2][0].")   
 			),
-			array(  // CALEFACCIÓN 2    ESTUFA NO TIENE CALCULO????
+			array(  // CALEFACCIï¿½N 2    ESTUFA NO TIENE CALCULO????
 				array(".$_POST['actividades_diarias'][0][3][0][0].",".$_POST['actividades_diarias'][0][3][0][1].",".$_POST['actividades_diarias'][0][3][0][2].",".$_POST['actividades_diarias'][0][3][0][3].",".$_POST['actividades_diarias'][0][3][0][4].",".$_POST['actividades_diarias'][0][3][0][5]."),
 				array(".$_POST['actividades_diarias'][0][3][1][0].",".$_POST['actividades_diarias'][0][3][1][1].",".$_POST['actividades_diarias'][0][3][1][2].",".$_POST['actividades_diarias'][0][3][1][3].",".$_POST['actividades_diarias'][0][3][1][4].",".$_POST['actividades_diarias'][0][3][1][5]."),
 				array(".$_POST['actividades_diarias'][0][3][2][0].",".$_POST['actividades_diarias'][0][3][2][1].",".$_POST['actividades_diarias'][0][3][2][2].",".$_POST['actividades_diarias'][0][3][2][3].",".$_POST['actividades_diarias'][0][3][2][4].",".$_POST['actividades_diarias'][0][3][2][5]."),
@@ -54,7 +56,7 @@ if(isset($_POST) && !empty($_POST)){
 				array(".$_POST['actividades_diarias'][0][3][5][0].",".$_POST['actividades_diarias'][0][3][5][1].",".$_POST['actividades_diarias'][0][3][5][2].",".$_POST['actividades_diarias'][0][3][5][3].",".$_POST['actividades_diarias'][0][3][5][4].",".$_POST['actividades_diarias'][0][3][5][5]."),
 				array(".$_POST['actividades_diarias'][0][3][6][0].",".$_POST['actividades_diarias'][0][3][6][1].",".$_POST['actividades_diarias'][0][3][6][2].",".$_POST['actividades_diarias'][0][3][6][3].",".$_POST['actividades_diarias'][0][3][6][4].",".$_POST['actividades_diarias'][0][3][6][5].")
 			),
-			array( // ILUMINACIÓN
+			array( // ILUMINACIï¿½N
 				array(".$_POST['actividades_diarias'][0][4][0][0].",".$_POST['actividades_diarias'][0][4][0][1].",".$_POST['actividades_diarias'][0][4][0][2].",".$_POST['actividades_diarias'][0][4][0][3].",".$_POST['actividades_diarias'][0][4][0][4]."),
 				array(".$_POST['actividades_diarias'][0][4][1][0].",".$_POST['actividades_diarias'][0][4][1][1].",".$_POST['actividades_diarias'][0][4][1][2].",".$_POST['actividades_diarias'][0][4][1][3].",".$_POST['actividades_diarias'][0][4][1][4]."),
 				array(".$_POST['actividades_diarias'][0][4][2][0].",".$_POST['actividades_diarias'][0][4][2][1].",".$_POST['actividades_diarias'][0][4][2][2].",".$_POST['actividades_diarias'][0][4][2][3].",".$_POST['actividades_diarias'][0][4][2][4]."),
@@ -230,7 +232,7 @@ input{
 	padding:3px;
 }
 </style>
-<!--<meta charset="utf-8">    para que tome las ñ y los tildes-->
+<!--<meta charset="utf-8">    para que tome las ï¿½ y los tildes-->
 </head>
 
 <body>
