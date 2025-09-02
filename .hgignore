@@ -1,0 +1,3 @@
+syntax: glob
+base_de_datos.txt
+datos_usuario/

@@ -1,0 +1,1 @@
+Controladas los calculos. Hidrica bien, eco y car valores erroneos
