@@ -1,51 +1,65 @@
 <?php
-//Declaracion de variables
+include_once('funciones.php');
+
+// Inicializo variables de resultados
 $calefaccion_huella_eco = 0;
 $calefaccion_huella_car = 0;
 $calefaccion_huella_hid = 0;
 
-// CALEFACCIÓN
-if(isset($_SESSION['datos']['hogar_p2']['con_gas_natural'])){
-	$var_temp_gas_car = 0;
-	$var_temp_gas_car += ($_SESSION['datos']['hogar_p2']['estufa_a_gas_cant'] * $var_calculos['hogar']['calefaccion']['estufa_a_gas']['consumo_kwh'] * $var_calculos['hogar']['calefaccion']['con_gas_natural']['emisiones']) / 860;
-	$var_temp_gas_car += ($_SESSION['datos']['hogar_p2']['calefon_cant'] * $var_calculos['hogar']['calefaccion']['calefon']['consumo_kwh'] * $var_calculos['hogar']['calefaccion']['con_gas_natural']['emisiones']) / 860;
-	$var_temp_gas_car += ($_SESSION['datos']['hogar_p2']['caldera_cant'] * $var_calculos['hogar']['calefaccion']['caldera']['consumo_kwh'] * $var_calculos['hogar']['calefaccion']['con_gas_natural']['emisiones']) / 860;
+$hogar = $_SESSION['datos']['hogar_p2'] ?? [];
 
-	$calefaccion_huella_car += ($var_temp_gas_car / $personas);
+// CALEFACCIÓN CON GAS NATURAL
+if(!empty($hogar['con_gas_natural'])) {
+    $var_temp_gas_car = 0;
+    $var_temp_gas_car += calcular_huella($hogar['estufa_a_gas_cant'] ?? 0, $var_calculos['hogar']['calefaccion']['estufa_a_gas']['consumo_kwh'], 1, $var_calculos['hogar']['calefaccion']['con_gas_natural']['emisiones'], 860);
+    $var_temp_gas_car += calcular_huella($hogar['calefon_cant'] ?? 0, $var_calculos['hogar']['calefaccion']['calefon']['consumo_kwh'], 1, $var_calculos['hogar']['calefaccion']['con_gas_natural']['emisiones'], 860);
+    $var_temp_gas_car += calcular_huella($hogar['caldera_cant'] ?? 0, $var_calculos['hogar']['calefaccion']['caldera']['consumo_kwh'], 1, $var_calculos['hogar']['calefaccion']['con_gas_natural']['emisiones'], 860);
+
+    $calefaccion_huella_car += $var_temp_gas_car / $personas;
 }
 
-if(isset($_SESSION['datos']['hogar_p2']['con_garrafa'])){
-	$var_temp_garrafa_car = 0;
-	$var_temp_garrafa_car += ($_SESSION['datos']['hogar_p2']['estufa_a_gas_cant'] * $var_calculos['hogar']['calefaccion']['estufa_a_gas']['consumo_kwh'] * $var_calculos['hogar']['calefaccion']['con_garrafa']['emisiones']) / 860;
-	$var_temp_garrafa_car += ($_SESSION['datos']['hogar_p2']['calefon_cant'] * $var_calculos['hogar']['calefaccion']['calefon']['consumo_kwh'] * $var_calculos['hogar']['calefaccion']['con_garrafa']['emisiones']) / 860;
-	$var_temp_garrafa_car += ($_SESSION['datos']['hogar_p2']['caldera_cant'] * $var_calculos['hogar']['calefaccion']['caldera']['consumo_kwh'] * $var_calculos['hogar']['calefaccion']['con_garrafa']['emisiones']) / 860;
-	
-	$calefaccion_huella_car += ($var_temp_garrafa_car / $personas);
+// CALEFACCIÓN CON GARRAFA
+if(!empty($hogar['con_garrafa'])) {
+    $var_temp_garrafa_car = 0;
+    $var_temp_garrafa_car += calcular_huella($hogar['estufa_a_gas_cant'] ?? 0, $var_calculos['hogar']['calefaccion']['estufa_a_gas']['consumo_kwh'], 1, $var_calculos['hogar']['calefaccion']['con_garrafa']['emisiones'], 860);
+    $var_temp_garrafa_car += calcular_huella($hogar['calefon_cant'] ?? 0, $var_calculos['hogar']['calefaccion']['calefon']['consumo_kwh'], 1, $var_calculos['hogar']['calefaccion']['con_garrafa']['emisiones'], 860);
+    $var_temp_garrafa_car += calcular_huella($hogar['caldera_cant'] ?? 0, $var_calculos['hogar']['calefaccion']['caldera']['consumo_kwh'], 1, $var_calculos['hogar']['calefaccion']['con_garrafa']['emisiones'], 860);
+
+    $calefaccion_huella_car += $var_temp_garrafa_car / $personas;
 }
 
-if(isset($_SESSION['datos']['hogar_p2']['con_lenia'])){
-	$var_temp_lenia_car += 0;
-	$var_temp_lenia_car += ($_SESSION['datos']['hogar_p2']['estufa_a_gas_cant'] * $var_calculos['hogar']['calefaccion']['estufa_a_gas']['consumo_kwh'] * $var_calculos['hogar']['calefaccion']['con_lenia']['emisiones']) / 860;
-	$var_temp_lenia_car += ($_SESSION['datos']['hogar_p2']['calefon_cant'] * $var_calculos['hogar']['calefaccion']['calefon']['consumo_kwh'] * $var_calculos['hogar']['calefaccion']['con_lenia']['emisiones']) / 860;
-	$var_temp_lenia_car += ($_SESSION['datos']['hogar_p2']['caldera_cant'] * $var_calculos['hogar']['calefaccion']['caldera']['consumo_kwh'] * $var_calculos['hogar']['calefaccion']['con_lenia']['emisiones']) / 860;
+// CALEFACCIÓN CON LEÑA
+if(!empty($hogar['con_lenia'])) {
+    $var_temp_lenia_car = 0;
+    $var_temp_lenia_car += calcular_huella($hogar['estufa_a_gas_cant'] ?? 0, $var_calculos['hogar']['calefaccion']['estufa_a_gas']['consumo_kwh'], 1, $var_calculos['hogar']['calefaccion']['con_lenia']['emisiones'], 860);
+    $var_temp_lenia_car += calcular_huella($hogar['calefon_cant'] ?? 0, $var_calculos['hogar']['calefaccion']['calefon']['consumo_kwh'], 1, $var_calculos['hogar']['calefaccion']['con_lenia']['emisiones'], 860);
+    $var_temp_lenia_car += calcular_huella($hogar['caldera_cant'] ?? 0, $var_calculos['hogar']['calefaccion']['caldera']['consumo_kwh'], 1, $var_calculos['hogar']['calefaccion']['con_lenia']['emisiones'], 860);
 
-	$calefaccion_huella_car += ($var_temp_lenia_car / $personas);
+    $calefaccion_huella_car += $var_temp_lenia_car / $personas;
 }
 
-$calefaccion_huella_eco += ($_SESSION['datos']['hogar_p2']['estufas_electricas_cant'] * $var_calculos['hogar']['calefaccion']['estufas_electricas']['consumo_kwh'] * ($var_calculos['hogar']['calefaccion']['estufas_electricas']['tiempo'] / 60) * $var_calculos['hogar']['calefaccion']['estufas_electricas']['factor']) / $personas;
-$calefaccion_huella_eco += ($_SESSION['datos']['hogar_p2']['aire_acondicionado_cant'] * $var_calculos['hogar']['calefaccion']['aire_acondicionado']['consumo_kwh'] * ($var_calculos['hogar']['calefaccion']['aire_acondicionado']['tiempo'] / 60) * $var_calculos['hogar']['calefaccion']['aire_acondicionado']['factor']) / $personas;
-$calefaccion_huella_eco += ($_SESSION['datos']['hogar_p2']['panel_electrico_cant'] * $var_calculos['hogar']['calefaccion']['panel_electrico']['consumo_kwh'] * ($var_calculos['hogar']['calefaccion']['panel_electrico']['tiempo'] / 60) * $var_calculos['hogar']['calefaccion']['panel_electrico']['factor']) / $personas;
-$calefaccion_huella_eco += ($_SESSION['datos']['hogar_p2']['caloventor_cant'] * $var_calculos['hogar']['calefaccion']['caloventor']['consumo_kwh'] * ($var_calculos['hogar']['calefaccion']['caloventor']['tiempo'] / 60) * $var_calculos['hogar']['calefaccion']['caloventor']['factor']) / $personas;
-$calefaccion_huella_eco += ($_SESSION['datos']['hogar_p2']['calefon_cant'] * $var_calculos['hogar']['calefaccion']['calefon']['agua_virtual'] * $var_calculos['hogar']['calefaccion']['calefon']['factor']) / $personas;	
-$calefaccion_huella_eco += ($_SESSION['datos']['hogar_p2']['caldera_cant'] * $var_calculos['hogar']['calefaccion']['caldera']['agua_virtual'] * $var_calculos['hogar']['calefaccion']['caldera']['factor']) / $personas;	
+// ELECTRICOS
+$electricos = [
+    'estufas_electricas','aire_acondicionado','panel_electrico','caloventor'
+];
 
-$calefaccion_huella_hid += ($_SESSION['datos']['hogar_p2']['calefon_cant'] * $var_calculos['hogar']['calefaccion']['calefon']['agua_virtual']) / $personas;
-$calefaccion_huella_hid += ($_SESSION['datos']['hogar_p2']['caldera_cant'] * $var_calculos['hogar']['calefaccion']['caldera']['agua_virtual']) / $personas;
+foreach($electricos as $elec) {
+    $cant = $hogar[$elec.'_cant'] ?? 0;
+    if($cant > 0) {
+        $calefaccion_huella_eco += calcular_huella($cant, $var_calculos['hogar']['calefaccion'][$elec]['consumo_kwh'], $var_calculos['hogar']['calefaccion'][$elec]['tiempo']/60, $var_calculos['hogar']['calefaccion'][$elec]['factor'], $personas);
+        $calefaccion_huella_car += calcular_huella($cant, $var_calculos['hogar']['calefaccion'][$elec]['consumo_kwh'], $var_calculos['hogar']['calefaccion'][$elec]['tiempo']/60, $var_calculos['hogar']['calefaccion'][$elec]['emisiones'], $personas);
+    }
+}
 
-$calefaccion_huella_car += ($_SESSION['datos']['hogar_p2']['estufas_electricas_cant'] * $var_calculos['hogar']['calefaccion']['estufas_electricas']['consumo_kwh'] * ($var_calculos['hogar']['calefaccion']['estufas_electricas']['tiempo'] / 60) * $var_calculos['hogar']['calefaccion']['estufas_electricas']['emisiones']) / $personas;
-$calefaccion_huella_car += ($_SESSION['datos']['hogar_p2']['aire_acondicionado_cant'] * $var_calculos['hogar']['calefaccion']['aire_acondicionado']['consumo_kwh'] * ($var_calculos['hogar']['calefaccion']['aire_acondicionado']['tiempo'] / 60) * $var_calculos['hogar']['calefaccion']['aire_acondicionado']['emisiones']) / $personas;
-$calefaccion_huella_car += ($_SESSION['datos']['hogar_p2']['panel_electrico_cant'] * $var_calculos['hogar']['calefaccion']['panel_electrico']['consumo_kwh'] * ($var_calculos['hogar']['calefaccion']['panel_electrico']['tiempo'] / 60) * $var_calculos['hogar']['calefaccion']['panel_electrico']['emisiones']) / $personas;
-$calefaccion_huella_car += ($_SESSION['datos']['hogar_p2']['caloventor_cant'] * $var_calculos['hogar']['calefaccion']['caloventor']['consumo_kwh'] * ($var_calculos['hogar']['calefaccion']['caloventor']['tiempo'] / 60) * $var_calculos['hogar']['calefaccion']['caloventor']['emisiones']) / $personas;
+// AGUA VIRTUAL
+$agua_virtual = [
+    'calefon','caldera'
+];
 
-// FIN CALEFACCIÓN
+foreach($agua_virtual as $elec) {
+    $cant = $hogar[$elec.'_cant'] ?? 0;
+    $calefaccion_huella_eco += ($cant * ($var_calculos['hogar']['calefaccion'][$elec]['agua_virtual'] ?? 0)) / $personas;
+    $calefaccion_huella_hid += ($cant * ($var_calculos['hogar']['calefaccion'][$elec]['agua_virtual'] ?? 0)) / $personas;
+}
+
 ?>
