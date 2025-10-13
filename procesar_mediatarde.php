@@ -1,26 +1,15 @@
 <?php
-// Declaración de variables
+ //Declaracion de variables
 $alim_mediatarde_huella_eco = 0;
 $alim_mediatarde_huella_car = 0;
 $alim_mediatarde_huella_hid = 0;
 
-// Lista de alimentos contemplados en la merienda de media tarde
-$alimentos_mediatarde = [
-    'pan', 'galletas', 'tortitas', 'facturas', 'cereales', 'manteca', 'queso',
-    'mermelada', 'yogur', 'cafe', 'leche', 'te', 'mate', 'chocolatada',
-    'jugo_de_frutas_natural', 'soda', 'frutas', 'nueces_almend_mani', 'chocolate'
-];
+ // MEDIATARDE
+require_once __DIR__ . '/funciones.php';
+$selecciones = (array)($_SESSION['datos']['alimentos_p3'] ?? []);
+$res = calcular_huella_alimentos('mediatarde', $selecciones, $var_calculos);
+$alim_mediatarde_huella_eco += $res['eco'];
+$alim_mediatarde_huella_car += $res['car'];
+$alim_mediatarde_huella_hid += $res['hid'];
 
-foreach ($alimentos_mediatarde as $alimento) {
-    if (isset($_SESSION['datos']['alimentos_p3'][$alimento])) {
-        $datos = $var_calculos['alim']['mediatarde'][$alimento];
-
-        $cantidad = $datos['cantidad_por_porcion'];
-        $unidad = $datos['unidad'];
-
-        $alim_mediatarde_huella_eco += $datos['factor'] * $cantidad;
-        $alim_mediatarde_huella_car += $datos['emisiones'] * ($cantidad / $unidad);
-        $alim_mediatarde_huella_hid += $datos['agua_virtual'] * ($cantidad / $unidad);
-    }
-}
-?>
+ // FIN MEDIATARDE

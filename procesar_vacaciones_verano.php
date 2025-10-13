@@ -1,33 +1,34 @@
 <?php
 // Declaración de variables
-$vacas_verano_huella_eco = 0;
-$vacas_verano_huella_car = 0;
-$vacas_verano_huella_hid = 0;
+$vacas_verano_huella_eco = 0.0;
+$vacas_verano_huella_car = 0.0;
+$vacas_verano_huella_hid = 0.0;
 
-// Datos de sesión
-$transporte = $_SESSION['datos']['transporte_p2'] ?? null;
-$calculos    = $var_calculos['transporte']['vacas_verano'] ?? null;
+require_once __DIR__ . '/funciones.php';
 
-if ($transporte && $calculos) {
-    $vacaciones = $transporte['vacaciones_verano'] ?? 'a_ningun_lado';
-    $vehiculo   = $transporte['vehiculo_verano'] ?? null;
+$vacaciones_verano = $_SESSION['datos']['transporte_p2']['vacaciones_verano'] ?? 'a_ningun_lado';
+$vehiculo_verano = $_SESSION['datos']['transporte_p2']['vehiculo_verano'] ?? 'auto';
 
-    if ($vacaciones !== 'a_ningun_lado' && isset($calculos[$vacaciones], $calculos[$vehiculo])) {
+if ($vacaciones_verano !== 'a_ningun_lado') {
+	$cfgDist = $var_calculos['transporte']['vacas_verano'][$vacaciones_verano] ?? null;
+	$cfgVeh = $var_calculos['transporte']['vacas_verano'][$vehiculo_verano] ?? null;
+	if ($cfgDist && $cfgVeh) {
+		$dist = (float)($cfgDist['distancia_recorrida'] ?? 0);
+		$idaVuelta = (float)($cfgVeh['viaje_ida_vuelta'] ?? 1);
+		// Base anualizada (distancia * viajes / 365)
+		$base = ($dist * $idaVuelta) / 365.0;
 
-        $distancia = $calculos[$vacaciones]['distancia_recorrida'] ?? 0;
-        $vehiculo_data = $calculos[$vehiculo];
+		$consumoL = (float)($cfgVeh['consumo_l'] ?? 0); // para eco
+		$factor = (float)($cfgVeh['factor'] ?? 0);
+		$emisiones = (float)($cfgVeh['emisiones'] ?? 0);
+		$consumoKwh = (float)($cfgVeh['consumo_kwh'] ?? 0); // para hid
+		$aguaVirtual = (float)($cfgVeh['agua_virtual'] ?? 0);
 
-        $ida_vuelta = $vehiculo_data['viaje_ida_vuelta'] ?? 1;
-        $consumo_l  = $vehiculo_data['consumo_l'] ?? 0;
-        $consumo_kwh = $vehiculo_data['consumo_kwh'] ?? 0;
-        $factor     = $vehiculo_data['factor'] ?? 0;
-        $emisiones  = $vehiculo_data['emisiones'] ?? 0;
-        $agua       = $vehiculo_data['agua_virtual'] ?? 0;
-
-        // Cálculos
-        $vacas_verano_huella_eco = ($distancia * ($consumo_l * $factor * $ida_vuelta)) / 365;
-        $vacas_verano_huella_car = ($distancia * ($emisiones * $ida_vuelta)) / 365;
-        $vacas_verano_huella_hid = ($distancia * ($consumo_kwh * $agua * $ida_vuelta)) / 365;
-    }
+		$res = calcular_huella_transporte($base, $consumoL, $factor, $emisiones, $consumoKwh, $aguaVirtual);
+		$vacas_verano_huella_eco = $res['eco'];
+		$vacas_verano_huella_car = $res['car'];
+		$vacas_verano_huella_hid = $res['hid'];
+	}
 }
-?>
+
+// FIN VACACIONES DE VERANO

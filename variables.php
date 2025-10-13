@@ -203,7 +203,4 @@ array(
 			'automovil' => array('viaje_ida_vuelta'=>2,'consumo_kwh'=>0.173,'agua_virtual'=>3.81,'emisiones'=>0.045,'factor'=>3.50E-04,'consumo_l'=>2.00E-02),
 		)
 	)
-);
-
-?>
-	
+);	

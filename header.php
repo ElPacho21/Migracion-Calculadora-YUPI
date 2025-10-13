@@ -1,11 +1,12 @@
 <?php
-error_reporting(E_WARNING);
+error_reporting(E_ALL);
 ini_set('display_errors','On');
 
-if(!session_id()){
-	session_start();
+// Iniciar sesión de forma segura en PHP 8.3
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
 }
-/**/
+
 function exp_to_dec($float_str)
 // formats a floating point number string in decimal notation, supports signed floats, also supports non-standard formatting e.g. 0.2e+2 for 20
 // e.g. '1.6E+6' to '1600000', '-4.566e-12' to '-0.000000000004566', '+34e+10' to '340000000000'
@@ -55,7 +56,8 @@ function exp_to_dec($float_str)
     else return $float_str;
 }
 function array2json($arr) { 
-    if(function_exists('json_encode')) return json_encode($arr); //Lastest versions of PHP already has this functionality. 
+    if(function_exists('json_encode')) return json_encode($arr); // Latest versions of PHP already have this functionality. 
+    if (empty($arr)) return '[]';
     $parts = array(); 
     $is_list = false; 
 
@@ -96,11 +98,13 @@ function array2json($arr) {
     return '{' . $json . '}';//Return associative JSON 
 } 
 
-require_once("variables.php");
-if(isset($_GET['p']) && !empty($_GET['p'])){
+require_once __DIR__ . "/variables.php";
+if(isset($_GET['p']) && $_GET['p'] !== ''){
+    // Reiniciar la sesión cuando se solicita un nuevo inicio
     session_destroy();
     session_start();
-	$_SESSION['paso'] = "home";
+    if (function_exists('session_regenerate_id')) {
+        session_regenerate_id(true);
+    }
+    $_SESSION['paso'] = "home";
 }
-
-?>
