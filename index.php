@@ -7,7 +7,7 @@ include("header.php");
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Cuál es tu impacto?</title>
+<title>CuÃ¡l es tu impacto?</title>
 <script src="scripts/jquery.min.js"></script>
 <script src="scripts/jquery-ui.min.js"></script>
 <script src="scripts/js.js"></script>

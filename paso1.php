@@ -1,5 +1,5 @@
 <?php 
-include("header.php");
+include __DIR__ . '/header.php';
 $_SESSION['paso'] = 'paso1';
 ?>
 <?php  //echo (json_encode($_SESSION)) ?>
