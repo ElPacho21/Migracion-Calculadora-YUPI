@@ -6,13 +6,13 @@ $viajes_diarios_huella_hid = 0;
 
 // VIAJES DIARIOS 
 
-$tiempo = ($_SESSION['datos']['transporte_p1']['tiempo']*40)/60;
+$tiempo = ( (int)($_SESSION['datos']['transporte_p1']['tiempo'] ?? 0) * 40 )/60;
 
-if(isset($_SESSION['datos']['transporte_p1']['con_quien'])){
-	$con_quien = $_SESSION['datos']['transporte_p1']['con_quien'];
-}
+// Evitar notices: definir con_quien y en_que de forma segura
+$con_quien = $_SESSION['datos']['transporte_p1']['con_quien'] ?? null; // null mantiene el comportamiento de comparación (no es 'solo')
+$en_que_base = $_SESSION['datos']['transporte_p1']['en_que'] ?? null;
 
-switch ($_SESSION['datos']['transporte_p1']['en_que']) {
+switch ($en_que_base) {
 	case 'taxi':
 		$en_que = ($con_quien == 'solo') ? 'taxi_solo' : 'taxi_acompaniado';
 		break;
@@ -23,15 +23,22 @@ switch ($_SESSION['datos']['transporte_p1']['en_que']) {
 		$en_que = ($con_quien == 'solo') ? 'auto_gnc_solo' : 'auto_gnc_acompaniado';
 		break;
 	default:
-		$en_que = $_SESSION['datos']['transporte_p1']['en_que'];
+		$en_que = $en_que_base; // puede ser null si no está definido
 		break;
 }
 
+// Acceso seguro a configuración para evitar warnings cuando en_que no esté definido
+$viaje_cfg = ($en_que !== null) ? ($var_calculos['transporte']['viaje_diario'][$en_que] ?? null) : null;
+$viaje_ida_vuelta = $viaje_cfg['viaje_ida_vuelta'] ?? 0;
+$consumo_kwh = $viaje_cfg['consumo_kwh'] ?? 0;
+$factor = $viaje_cfg['factor'] ?? 0;
+$emisiones = $viaje_cfg['emisiones'] ?? 0;
+$agua_virtual = $viaje_cfg['agua_virtual'] ?? 0;
 
-$viajes_diarios_huella_eco = $tiempo * $var_calculos['transporte']['viaje_diario'][$en_que]['viaje_ida_vuelta'] * $var_calculos['transporte']['viaje_diario'][$en_que]['consumo_kwh'] * $var_calculos['transporte']['viaje_diario'][$en_que]['factor'];
+$viajes_diarios_huella_eco = $tiempo * $viaje_ida_vuelta * $consumo_kwh * $factor;
 
-$viajes_diarios_huella_car = $tiempo * $var_calculos['transporte']['viaje_diario'][$en_que]['viaje_ida_vuelta'] * $var_calculos['transporte']['viaje_diario'][$en_que]['emisiones'];
+$viajes_diarios_huella_car = $tiempo * $viaje_ida_vuelta * $emisiones;
 
-$viajes_diarios_huella_hid = $tiempo * $var_calculos['transporte']['viaje_diario'][$en_que]['viaje_ida_vuelta'] * $var_calculos['transporte']['viaje_diario'][$en_que]['consumo_kwh'] * $var_calculos['transporte']['viaje_diario'][$en_que]['agua_virtual'];
+$viajes_diarios_huella_hid = $tiempo * $viaje_ida_vuelta * $consumo_kwh * $agua_virtual;
 
 ?>
