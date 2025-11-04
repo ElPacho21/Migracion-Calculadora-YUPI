@@ -183,9 +183,7 @@ if (!empty($_GET)){
 	}
 }
 
-// POST not used currently; reserved for future use
 if(!empty($_POST)){
-	// no-op
 }
 
 echo array2json($salida);

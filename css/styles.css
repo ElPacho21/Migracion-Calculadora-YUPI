@@ -272,7 +272,7 @@ dl dt.selectable, dl dd.selectable{
 }
 
 label{
-	cursor:pointer
+	cursor:pointer;
 	letter-spacing: -1px;
 	color: #33577f;
 	font-size: 16px;
@@ -443,8 +443,6 @@ img.titulo_datos{
 #datosuser{
 	width: 300px;
 	background:#fa8900;
-	background:url(data:image/svg+xml;
-		base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZhODkwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2ZhYTUwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmYTg5MDAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
 	background:-moz-linear-gradient(left,rgba(250,137,0,1) 0,rgba(250,165,0,1) 50%,rgba(250,137,0,1) 100%);
 	background:-webkit-gradient(linear,left top,right top,color-stop(0,rgba(250,137,0,1)),color-stop(50%,rgba(250,165,0,1)),color-stop(100%,rgba(250,137,0,1)));
 	background:-webkit-linear-gradient(left,rgba(250,137,0,1) 0,rgba(250,165,0,1) 50%,rgba(250,137,0,1) 100%);
@@ -707,3 +705,134 @@ img.info_volver:hover{
 	background-position:-177px -1181px
 }
 
+:root{
+	--bg: #f4f7fb;
+	--card-bg: #ffffff;
+	--primary: #2563eb;
+	--primary-600: #1d4ed8;
+	--accent: #22c55e;
+	--text: #0f172a;
+	--muted: #64748b;
+	--border: #e2e8f0;
+	--shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+}
+
+html, body{
+	background: var(--bg);
+	color: var(--text);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+body, input, select, button, label, p, ul, li, dl, dd, dt{
+	font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+#como_reducir,#resultados,#info,
+#paso2 div.colder,
+#datos{
+	background: var(--card-bg);
+	border: 1px solid var(--border);
+	box-shadow: var(--shadow);
+}
+
+#paso2 div.colder span{
+	display:block;
+	padding: 20px 24px;
+}
+
+ul{
+	display:flex;
+	gap: 6px;
+	height:auto;
+	list-style:none;
+}
+ul li{
+	float:none;
+	background: transparent;
+}
+ul li a{
+	color: var(--muted);
+	background: #fff;
+	border: 1px solid var(--border);
+	border-radius: 999px;
+	padding: 6px 14px;
+	line-height: 1.5;
+	transition: all .2s ease;
+}
+ul li a:hover{
+	color: var(--primary);
+	border-color: var(--primary);
+}
+ul li.selected a{
+	color: #fff;
+	background: var(--primary);
+	border-color: var(--primary);
+}
+
+select{
+	appearance: none;
+	-webkit-appearance: none;
+	background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="%2364748b" d="M5.5 7l4.5 5 4.5-5z"/></svg>') no-repeat right 10px center;
+	background-size: 16px 16px;
+	border: 1px solid var(--border);
+	border-radius: 10px;
+	padding: 8px 36px 8px 10px;
+	font-size: 14px;
+	color: var(--text);
+	transition: border-color .2s ease, box-shadow .2s ease;
+}
+select:focus{
+	outline: none;
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+}
+
+input[type="checkbox"]{
+	width: 20px; height: 20px;
+	transform: translateY(2px);
+}
+
+label{
+	color: var(--text);
+	letter-spacing: 0;
+}
+
+img.titulo_transporte,img.titulo_alimento,img.titulo_hogar,
+img.titulo_datos,img.titulo_resultado,img.titulo_reducir,img.titulo_info{
+	filter: drop-shadow(0 4px 12px rgba(2,6,23,.12));
+}
+
+#navegacion a{
+	position: relative;
+	display:inline-flex;
+	align-items:center;
+	gap:8px;
+	padding: 10px 14px;
+	border-radius: 10px;
+	background: #fff;
+	border:1px solid var(--border);
+	box-shadow: 0 2px 10px rgba(2,6,23,.06);
+	transition: all .2s ease;
+}
+#navegacion a:hover{
+	border-color: var(--primary);
+	box-shadow: 0 6px 16px rgba(2,6,23,.10);
+}
+
+#paso2 div.colizq img{
+	transition: opacity .2s ease, transform .2s ease;
+}
+#paso2 div.colizq img:hover{
+	opacity: 0.9 !important;
+	transform: translateY(-2px);
+}
+
+@media (max-width: 992px){
+	div.centrado{ left: 5%; width: 90%; }
+	#paso2 div.colder{ width:100%; }
+	#paso2 div.colizq{ width:100%; display:flex; gap:12px; justify-content:center; margin-bottom:14px; }
+}
+@media (max-width: 640px){
+	ul{ flex-wrap: wrap; }
+	select{ width: 100%; }
+}

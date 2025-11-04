@@ -7,7 +7,7 @@ $_SESSION['atras'] = 'paso1';
 <script type="text/javascript">
 var paso_atras = '<?php echo htmlspecialchars($_SESSION['atras'] ?? '', ENT_QUOTES, 'UTF-8')?>';
 </script>
-<?php  //echo (json_encode($_SESSION)) ?>
+<?php ?>
 <input type="hidden" name="subpage" value="<?php echo htmlspecialchars($_SESSION['subpage'] ?? '', ENT_QUOTES, 'UTF-8')?>" />
 <ul>
     <li class="selected" style="width:33%"><a href="javascript:;">ELECTRODOMESTICOS</a></li>
@@ -59,31 +59,35 @@ var paso_atras = '<?php echo htmlspecialchars($_SESSION['atras'] ?? '', ENT_QUOT
 </div>
 <div class="col2d3">
     <dl>
-        <dt class="selectable"><select name="equipo_de_musica_cant" id="op12">
-          <?php  for($L=0;$L<=5;$L++){ echo '<option value="'.$L.'" '.(($_SESSION['datos']['hogar_p3']['equipo_de_musica_cant'] == $L)? 'selected="selected"':'').'>'.$L.'</option>';}
-          ?></select>
+                <dt class="selectable"><select name="equipo_de_musica_cant" id="op12">
+                    <?php  $selEquipo = (int)($_SESSION['datos']['hogar_p1']['equipo_de_musica_cant'] ?? 0);
+                                 for($L=0;$L<=5;$L++){ echo '<option value="'.$L.'" '.(($selEquipo == $L)? 'selected="selected"':'').'>'.$L.'</option>';} 
+                    ?></select>
         </dt>
         <dd><label for="op12">Equipo de m&uacute;sica</label></dd>        
         <dt class="selectable">
             <select name="televisor_cant" id="op13">
-            <?php   for($L=0;$L<=5;$L++){
-                    echo '<option value="'.$L.'" '.(($_SESSION['datos']['hogar_p1']['televisor_cant'] == $L)? 'selected="selected"':'').'>'.$L.'</option>';
-                } 
+            <?php   $selTv = (int)($_SESSION['datos']['hogar_p1']['televisor_cant'] ?? 0);
+                    for($L=0;$L<=5;$L++){
+                        echo '<option value="'.$L.'" '.(($selTv == $L)? 'selected="selected"':'').'>'.$L.'</option>';
+                    } 
             ?>
                 
             </select>
         </dt>
         <dd class="selectable"><label for="op13">Televisor</label> </dd>
         <dt class="selectable"><select name="heladera_cant" id="op4">
-          <?php  for($L=0;$L<=2;$L++){ echo '<option value="'.$L.'" '.(($_SESSION['datos']['hogar_p3']['heladera_cant'] == $L)? 'selected="selected"':'').'>'.$L.'</option>';}
-          ?></select>
+       <?php  $selHeladera = (int)($_SESSION['datos']['hogar_p1']['heladera_cant'] ?? 0);
+           for($L=0;$L<=2;$L++){ echo '<option value="'.$L.'" '.(($selHeladera == $L)? 'selected="selected"':'').'>'.$L.'</option>';} 
+       ?></select>
         </dt>
         <dd><label for="op4">Heladera</label></dd>
         <dt class="selectable">
             <select name="computadora_cant" id="op14">
-                <?php  for($L=0;$L<=10;$L++){
-                        echo '<option value="'.$L.'" '.(($_SESSION['datos']['hogar_p1']['computadora_cant'] == $L)? 'selected="selected"':'').'>'.$L.'</option>';
-                    }
+                <?php  $selPc = (int)($_SESSION['datos']['hogar_p1']['computadora_cant'] ?? 0);
+                       for($L=0;$L<=10;$L++){
+                           echo '<option value="'.$L.'" '.(($selPc == $L)? 'selected="selected"':'').'>'.$L.'</option>';
+                       }
                 ?>
             </select>
         </dt>

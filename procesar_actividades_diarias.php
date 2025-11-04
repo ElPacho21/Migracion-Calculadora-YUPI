@@ -8,7 +8,6 @@ $platos_modo = $_SESSION['datos']['hogar_p3']['como_lavas_los'];
 $auto_modo = $_SESSION['datos']['hogar_p3']['como_lavas_auto'];
 $tenes_pileta = $_SESSION['datos']['hogar_p3']['tenes_pileta'];
 
-// Evitar warnings cuando falten claves en $var_calculos o en modos dinámicos
 $act_diarias_cfg = $var_calculos['hogar']['act_diarias'] ?? [];
 
 

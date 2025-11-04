@@ -7,7 +7,7 @@ $_SESSION['atras'] = 'alimentos_p1';
 <script type="text/javascript">
 var paso_atras = '<?php echo htmlspecialchars($_SESSION['atras'] ?? '', ENT_QUOTES, 'UTF-8')?>';
 </script>
-<?php  //echo (json_encode($_SESSION)) ?>
+<?php ?>
 <input type="hidden" name="subpage" value="<?php echo htmlspecialchars($_SESSION['subpage'] ?? '', ENT_QUOTES, 'UTF-8')?>" />
 <ul>
     <li style="width:25%"><a href="javascript:;">DESAYUNO</a></li>

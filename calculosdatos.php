@@ -1,7 +1,6 @@
 ﻿
 <?php
 if (isset($_POST) && !empty($_POST)) {
-  // Sanitiza recursivamente los datos del formulario y normaliza números
   $sanitize = function ($value) use (&$sanitize) {
     if (is_array($value)) {
       return array_map($sanitize, $value);
@@ -10,7 +9,6 @@ if (isset($_POST) && !empty($_POST)) {
       $value = trim($value);
     }
     if (is_numeric($value)) {
-      // Convierte a número (int/float) para mantener tipos numéricos
       return $value + 0;
     }
     return $value;
@@ -21,11 +19,9 @@ if (isset($_POST) && !empty($_POST)) {
     ? $sanitized['actividades_diarias']
     : array();
 
-  // Genera variables.php de forma segura usando var_export
   $content = "<?php\n" . '$calculos = ' . var_export($calculos, true) . ";\n";
   file_put_contents('variables.php', $content, LOCK_EX);
 
-  // Redirige para evitar reenvío del formulario
   header('Location: ' . $_SERVER['PHP_SELF']);
   exit();
 }

@@ -23,18 +23,17 @@
 
 	<script type="text/javascript">
 		
-		//$('[data-toggle="tooltip"]').tooltip('show')
 		jQuery.get('base_de_datos.txt', function(data) {
-			var data_base = data; //Guardo el archivo en la variable data_base
-			var filas = data_base.split("\n"); //Datos separados por salto de linea
-			var cabecera = filas[0].split(","); //Datos separados por salto de linea
+			var data_base = data;
+			var filas = data_base.split("\n");
+			var cabecera = filas[0].split(",");
 			tabla ="<table id='tabla-datos' class='table table-striped'>"
-			for (i = 0; i < filas.length-1; i++) { //Loop recorre las filas
-				var columna = filas[i].split(","); //Datos separados por coma
+			for (i = 0; i < filas.length-1; i++) {
+				var columna = filas[i].split(",");
 
 				(i==0) ? tabla = tabla + "<thead>" : tabla = tabla + "<tr>";
 
-				for (j = 0; j < columna.length; j++) { //Loop recorre las columnas de una fila
+				for (j = 0; j < columna.length; j++) {
 					(i==0) ? tabla = tabla + "<th nowrap><span>" + columna[j] + "</span></th>" : tabla = tabla + "<td nowrap> <span  data-toggle='tooltip' data-placement='auto' title='" + cabecera[j] + "'>" + columna[j] + "</span></td>";				
 				}
 

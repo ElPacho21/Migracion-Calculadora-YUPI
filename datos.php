@@ -8,7 +8,7 @@ $_SESSION['atras'] = 'paso2';
 var paso_atras = '<?php echo $_SESSION['atras']?>';
 </script>
 
-<?php  //echo (json_encode($_SESSION)) ?>
+<?php ?>
 
 <input type="hidden" name="subpage" value="<?php echo $_SESSION['subpage']?>" />
 <div id="datos">
