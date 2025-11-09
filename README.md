@@ -2,11 +2,11 @@
 
 Este documento describe en detalle la migración de la calculadora YUPI desde PHP 5.4 hacia PHP 8.3 ejecutándose en XAMPP (Windows). El enfoque fue conservador: mantener exactamente la lógica funcional original y aplicar cambios mínimos y seguros para compatibilidad, robustez y una ligera actualización visual.
 
-## Resumen ejecutivo
+## Resumen
 
 - Alcance: migración sintáctica y de seguridad sin modificar fórmulas ni resultados; eliminación de avisos (warnings) por índices indefinidos; persistencia de sesión entre subpasos; mejoras visuales sutiles no disruptivas.
 - Comportamiento: los cálculos y reglas de negocio se preservan. Solo se añadieron resguardos (defaults) ante datos faltantes y ajustes de sesión/UI.
-- Validación: se verificó sintaxis de los procesadores; se redujeron los warnings reportados; se probó el flujo paso1 → paso2 (hogar/alimentos/transporte) → resultados.
+- Validación: se verificó sintaxis de los "procesar"; se redujeron los warnings reportados; se probó el flujo paso1 → paso2 (hogar/alimentos/transporte) → resultados.
 
 ## Objetivos y criterios de éxito
 
@@ -31,7 +31,7 @@ Archivo clave: `header.php`
 
 Riesgo/Impacto: Bajo. No cambia la semántica de lectura/escritura de `$_SESSION`, solo la duración y atributos de la cookie.
 
-### 2) Robustez de procesadores (warnings a 0 sin tocar fórmulas)
+### 2) Robustez en lógica
 
 Archivos revisados: `procesar_*.php` (todos). 
 Archivos con endurecimiento aplicado (ejemplos más relevantes):
@@ -62,12 +62,11 @@ Resultados:
 - Si el usuario avanza a `hogar_p2`, cierra y reabre, el sistema conserva elecciones y prellena correctamente los campos de `hogar_p1`.
 - Se evita que el usuario quede "a mitad" con sesión vacía y pantallas posteriores mostrando formularios/errores incongruentes.
 
-### 4) Estilos y micro-UX (no disruptivo)
+### 4) Estilos y micro-UX
 
 Archivo: `css/styles.css`.
 - Se añadió una capa de estilos moderna con variables CSS (colores, sombras), tabs tipo píldora, selects con flecha SVG inline, hover states y ajustes responsive.
 - Correcciones de sintaxis CSS que impedían parseo (p. ej., un punto y coma faltante y una data-URL SVG problemática fue reemplazada por gradientes estándar ya presentes).
-- Ajuste solicitado: tamaño de los checkboxes ligeramente mayor (de 18px a 20px) para mejor accesibilidad visual.
 
 Importante: no se alteró el HTML, por lo que la compatibilidad visual se mantiene con los assets existentes.
 
@@ -88,7 +87,6 @@ Importante: no se alteró el HTML, por lo que la compatibilidad visual se mantie
     factores consultados con `?? 0`.
 - `css/styles.css`
   - Capa moderna (variables, sombreado, tabs, selects) y correcciones de parseo.
-  - Checkboxes ampliados levemente a 20×20 px.
 
 Nota: Otros `procesar_*.php` fueron auditados para PHP 8.3 (lint) y no requirieron cambios lógicos.
 
@@ -103,61 +101,25 @@ Nota: Otros `procesar_*.php` fueron auditados para PHP 8.3 (lint) y no requirier
 - Chequeo de sintaxis en PHP (Windows PowerShell):
   
   ```powershell
-  # Sintaxis de un archivo
-  C:\xampp\php\php.exe -l "c:\xampp\htdocs\yupi_mod\procesar_actividades_diarias.php"
-
   # Sintaxis de todos los PHP del proyecto
-  Get-ChildItem -Recurse -Filter *.php | ForEach-Object { & C:\xampp\php\php.exe -l $_.FullName }
+  Get-ChildItem -Recurse -Filter *.php | ForEach-Object { & ~\xampp\php\php.exe -l $_.FullName }
   ```
-
-- Escenarios de prueba funcional:
-  1. Flujo completo hogar: paso1 → paso2_hogar_p1 → p2 → p3 → resultados. Verificar prellenado al retroceder.
-  2. Persistencia: completar `hogar_p1`, avanzar a `hogar_p2`, cerrar navegador, reabrir, volver a `hogar_p1`. Los campos deben conservarse.
-  3. Transporte (viajes diarios): probar combinaciones sin selección previa y con selección parcial; no deben aparecer warnings.
-  4. Vacaciones (verano/invierno): probar destinos y vehículos mixtos; si falta alguno, el cálculo debe omitir sin errores.
-
-## Configuración recomendada (php.ini)
-
-- `error_reporting = E_ALL`
-- `display_errors = Off` (producción) / `On` (desarrollo)
-- `log_errors = On`
-- `date.timezone = America/Argentina/Buenos_Aires` (o zona local)
-- `session.cookie_httponly = 1`
-- `session.cookie_samesite = Lax`
 
 ## Seguridad y compatibilidad
 
 - Cookies de sesión con `HttpOnly` y `SameSite=Lax`; `Secure` cuando haya HTTPS.
-- Entradas de formularios se tratan como valores crudos; los procesadores únicamente endurecen accesos a índices.
+- Entradas de formularios se tratan como valores crudos; los "procesar" únicamente endurecen accesos a índices.
 - No se introdujo JS de terceros ni dependencias nuevas.
 
-## Rendimiento
+## TODO
 
-- Sin cambios estructurales. La adición de checks `??` es O(1) y no afecta medible el rendimiento.
-- La capa de estilos agrega sombras/hover sutiles; impacto insignificante en navegadores modernos.
-
-## Limitaciones conocidas y próximos pasos sugeridos
-
-- Guardas por subpaso: extender el chequeo de datos previos a todos los subpasos de `paso2_*` para evitar navegación directa a etapas intermedias sin contexto.
-- Prefill coherente en todas las vistas: auditar rápido `paso2_alimentos_*` y `paso2_transporte_*` para uniformar fuentes de datos y defaults.
-- Centralizar validaciones: crear utilidades PHP para lectura segura de `$_SESSION['datos']` y `var_calculos` (evita repetir `??`).
-- Endurecimiento de entrada: sanitización/validación de parámetros de formularios (tipos, rangos) si se evoluciona la app.
 - Pruebas automatizadas: agregar pruebas unitarias mínimas para funciones de cómputo clave y un par de flujos end-to-end básicos.
 
 ## Cómo ejecutar (XAMPP)
 
-1. Iniciar Apache (y MySQL si corresponde) en el Panel de XAMPP.
-2. Colocar el proyecto en `c:\xampp\htdocs\yupi_mod`.
+1. Iniciar Apache en el Panel de XAMPP.
+2. Colocar el proyecto en `~\xampp\htdocs\yupi_mod`.
 3. Abrir en el navegador: `http://localhost/yupi_mod/` y seguir el asistente.
 
 Logs y depuración:
 - Revisar `xampp\apache\logs\error.log` para errores PHP/Apache.
-- Utilizar `var_dump()` / `error_log()` puntuales durante pruebas (evitar en producción).
-
-## Historial de cambios (changelog resumido)
-
-- 2025-11: Migración a PHP 8.3, robustez en accesos a índices, persistencia de sesión, correcciones de prefill, mejoras de estilo y tamaño de checkboxes a 20px.
-
----
-
-Si aparece algún warning nuevo bajo escenarios no cubiertos, seguir el patrón: localizar acceso a índice potencialmente no definido y proteger con `??` (o `isset`) sin alterar los cálculos cuando el dato sí existe.
