@@ -1,6 +1,6 @@
-# Migración del proyecto a PHP 8.3 (informe técnico)
+# Migración del proyecto a PHP 8.3
 
-Este documento describe en detalle la migración de la calculadora YUPI desde PHP 5.4 hacia PHP 8.3 ejecutándose en XAMPP (Windows). El enfoque fue conservador: mantener exactamente la lógica funcional original y aplicar cambios mínimos y seguros para compatibilidad, robustez y una ligera actualización visual.
+Este documento describe en detalle la migración de la calculadora YUPI desde PHP 5.4 hacia PHP 8.3 ejecutándose en XAMPP. El enfoque fue conservador: mantener exactamente la lógica funcional original y aplicar cambios mínimos y seguros para compatibilidad, robustez y una ligera actualización visual.
 
 ## Resumen
 
@@ -17,7 +17,7 @@ Este documento describe en detalle la migración de la calculadora YUPI desde PH
 
 ## Entorno objetivo
 
-- PHP 8.3 con XAMPP en Windows.
+- PHP 8.3 con XAMPP.
 - Navegadores actuales (Chromium/Firefox/Edge). 
 - Codificación y fuentes: se mantuvo la compatibilidad con `@charset "iso-8859-1"` del CSS principal.
 
@@ -70,7 +70,7 @@ Archivo: `css/styles.css`.
 
 Importante: no se alteró el HTML, por lo que la compatibilidad visual se mantiene con los assets existentes.
 
-## Cambios específicos por archivo (resumen)
+## Cambios específicos por archivo
 
 - `header.php`
   - Configuración de cookie de sesión persistente y segura.
